@@ -8,14 +8,16 @@ import pandas as pd
 def processing(file_path: Path) -> List:
     if not file_path.is_file():
         raise Exception
+
     cleaned_lines = []
 
-    with open(file_path, 'rt', encoding='cp949') as file:
+    with open(file_path, 'r') as file:
         lines = file.readlines()
 
         for line in lines:
             line = re.sub(r'^\d+', '', line)  # 앞에 숫자 삭제
-            line = re.sub(r'\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}', '', line)  # 시간 정보 제거
+            # line = re.sub(r'\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}', '', line)  # 시간 정보 제거
+            line = re.sub(r'\d{2}:\d{2}:\d{2},\d{3}\s*--> \s*\d{2}:\d{2}:\d{2},\d{3}', '', line)  # 시간 정보 제거
             line = re.sub(r'\[.*?\]', '', line)  # 대괄호 안의 내용 제거
             line = re.sub(r'\s*\(.*?\)\s*', ' ', line)  # 괄호 안의 내용 제거
             line = re.sub(r'#NAME\?', '', line)  # #NAME 부분 삭제
@@ -25,7 +27,6 @@ def processing(file_path: Path) -> List:
             if line.strip():  # 빈 문자열인 경우에는 추가하지 않음
                 line = line.replace('"', '').strip()
                 cleaned_lines.append(line.strip())
-
     return cleaned_lines
 
 
