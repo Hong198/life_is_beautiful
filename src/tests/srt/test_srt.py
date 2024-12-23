@@ -8,9 +8,9 @@ def test_srt():
 
 
 TEXT = """1
-00:00:47,797 --> 00:00:50,300
-[옅은 자동차 엔진음]
-[옅은 자동차 경적]"""
+00:01:11,196 --> 00:01:13,073
+아, 감사합니다
+[세연의 가쁜 숨소리]"""
 lines = TEXT.splitlines()
 
 
@@ -44,4 +44,11 @@ def test_text():
 
     # 결과 출력
     for line in cleaned_lines:
+        print(line)
+
+
+def test_time():
+    for line in lines:
+        line = re.sub(r'\d{2}:\d{2}:\d{2},\d{3}\s*-->\s*\d{2}:\d{2}:\d{2},\d{3}', '', line)
+        # line = re.sub(r':\d{2}:\d{2},\d{3}\s*>\s*\d{2}:\d{2}:\d{2},\d{3}', '', line)
         print(line)
